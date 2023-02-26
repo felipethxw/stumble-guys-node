@@ -4,7 +4,7 @@ module.exports = class StumbleGuys {
     constructor() {}
 
     async getTournamentsList(server) {
-        if (server && typeof server !== 'string' || !['eu', 'sa', 'us', 'asia', 'in'].includes(server?.toLowerCase())) {
+        if (server && !['eu', 'sa', 'us', 'asia', 'in'].includes(server?.toLowerCase())) {
             throw new Error("Invalid server [ EU/SA/US/ASIA/IN ]");
         };
         const apiURL = "https://backbone-client-api.azurewebsites.net/api/v2/tournamentGetList";
