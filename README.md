@@ -14,7 +14,7 @@ const StumbleGuys = require('stumble-guys-node');
 const sg = new StumbleGuys();
 
 let server = "sa";
-// Servidor que você deseja ver os servidores (VAZIO = TODOS)
+// Servidor que você deseja ver os torneios (VAZIO = TODOS)
 
 await sg.getTournamentsList(server) // Retorna um array com todos o torneios
     .then(response => {
