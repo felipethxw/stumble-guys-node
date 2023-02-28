@@ -53,8 +53,7 @@ await sg.accountInfo("accessToken")
     });
 ```
 
-- 🇧🇷 - Trocando o nick da conta pelo accessToken, vale lembrar que isso não altera dentro do jogo, apenas no servidor do jogo (quando vão te dar ban por exemplo, tem que ser o nick que você trocar aqui.)<br>
-<br>
+- 🇧🇷 - Trocando o nick da conta pelo accessToken, vale lembrar que isso não altera dentro do jogo, apenas no servidor do jogo (quando vão te dar ban por exemplo, tem que ser o nick que você trocar aqui.)<br><br>
 - 🇺🇸 - Changing the account's nickname for the accessToken, it is worth remembering that this does not change within the game, only on the game server (when they ban you, for example, it has to be the nickname you change here.)
 
 ```js
@@ -69,8 +68,7 @@ await sg.changeNickname("accessToken")
     });
 ```
 
-- 🇧🇷 - Buscando por todas as skins do jogo. [Pode ser de uma versão especifica ou de todas.]<br>
-<br>
+- 🇧🇷 - Buscando por todas as skins do jogo. [Pode ser de uma versão especifica ou de todas.]<br><br>
 - 🇺🇸 - Searching for all skins in the game. [Can be a specific version or all.]
 
 ```js
