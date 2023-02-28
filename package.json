@@ -1,6 +1,6 @@
 {
   "name": "stumble-guys-node",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Um módulo para Node para interagir com o servidor do Stumble Guys.",
   "main": "index.js",
   "scripts": {
