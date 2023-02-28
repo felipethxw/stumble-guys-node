@@ -1,10 +1,10 @@
 const core = require("./resources/core.json");
 
 module.exports = class StumbleGuys {
-    constructor() {}
+    constructor() { }
 
     async getTournamentsList(server) {
-        if (server && !['eu', 'sa', 'us', 'asia', 'in'].includes(server?.toLowerCase())) {
+        if (server?.length > 1 && !['eu', 'sa', 'us', 'asia', 'in'].includes(server?.toLowerCase())) {
             throw new Error("Invalid server [ EU/SA/US/ASIA/IN ]");
         };
         const apiURL = "https://backbone-client-api.azurewebsites.net/api/v2/tournamentGetList";
@@ -48,9 +48,99 @@ module.exports = class StumbleGuys {
                     });
 
                     result = dataMapeada;
-                };    
+                };
             });
 
-            return result;
+        return result;
     };
+
+    async accountInfo(accessToken) {
+        if (!accessToken) {
+            throw new Error("Invalid Access Token.");
+        };
+
+        let result;
+
+        fetch("https://backbone-client-api.azurewebsites.net/api/v1/userGet", {
+            "method": "POST",
+            "headers": {
+                "Host": "backbone-client-api.azurewebsites.net",
+                "User-Agent": "UnityPlayer/2020.3.38f1 (UnityWebRequest/1.0, libcurl/7.80.0-DEV)",
+                "Accept": "*/*",
+                "BACKBONE_APP_ID": "8561191D-03B7-423E-B779-D2F6E77A3A45",
+                "ACCESS_TOKEN": "682256917627678300-5THBP4fdvFivP0t64C6kZbKTX+hw2Zsl:7iUH+dXLiDLR/KAbc+8NpSpuJKV2vlAgEH63biFPQcyFKBTtewEHz7wrfnrfPVU1UyQ08JGfZE9ciBzra8TnIw==",
+                "X-Unity-Version": "2020.3.38f1",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive"
+            },
+            "body": "lastUpdate=1900-01-01T00%3a00%3a00&lastSync=1900-01-01T00%3a00%3a00&generateQuests=0&getQuests=0&getTiles=0&getLayouts=0&accessToken=682256917627678300-5THBP4fdvFivP0t64C6kZbKTX%2Bhw2Zsl%3A7iUH%2BdXLiDLR%2FKAbc%2B8NpSpuJKV2vlAgEH63biFPQcyFKBTtewEHz7wrfnrfPVU1UyQ08JGfZE9ciBzra8TnIw%3D%3D",
+            "compress": true
+        })
+            .then(r => r.json())
+            .then(data => {
+                result = data;
+            })
+            .catch(() => {
+                throw new Error("Invalid Access Token.");
+            });
+
+        return result;
+    };
+
+    async changeNickname(accessToken, nickname) {
+        /*
+        🇧🇷 Português: A função changeNickname altera apenas dentro dos servidores do jogo (quando você ganhar um torneio, quando algum influenciador/moderador do jogo for te dar ban terá que colocar este nick.)
+        🇺🇸 English: The changeNickname function changes only within the game servers (when you win a tournament, when an influencer/moderator of the game wants to ban you, you will have to put this nickname.)
+        */
+
+        if (!accessToken) {
+            throw new Error("Invalid Access Token\nExample:\nchangeNickname('Acess Token', 'New Nickname')");
+        };
+
+        let returnMessage;
+
+        fetch("https://backbone-client-api.azurewebsites.net/api/v1/userChangeNick", {
+            method: "POST",
+            headers: {
+                "Host": "backbone-client-api.azurewebsites.net",
+                "User-Agent": "UnityPlayer/2020.3.38f1 (UnityWebRequest/1.0, libcurl/7.80.0-DEV)",
+                "Accept": "*/*",
+                "BACKBONE_APP_ID": "8561191D-03B7-423E-B779-D2F6E77A3A45",
+                "ACCESS_TOKEN": accessToken,
+                "X-Unity-Version": "2020.3.38f1",
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `nickName=${nickname}&accessToken=${encodeURIComponent(accessToken)}`
+        })
+            .then(r => r.json())
+            .then(data => {
+                if (data.nickName == nickname) {
+                    // nickname alterado com sucesso!
+                    returnMessage = 200;
+                };
+            })
+            .catch(() => {
+                throw new Error("Invalid Access Token.");
+            });
+
+        return returnMessage;
+    };
+
+    async skinsList(version) {
+        let returnArray;
+        await fetch('https://api.test.stumbleguys.com/shared/1/StumbleGuysNode', {
+            method: 'GET'
+        })
+            .then(r => r.json())
+            .then(data => {
+                if (version) {
+                    returnArray = data.Skins_v4.filter(x => x.Version == version);
+                } else {
+                    returnArray = data.Skins_v4;
+                };
+            });
+
+        return returnArray;
+    }
 }
