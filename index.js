@@ -61,21 +61,20 @@ module.exports = class StumbleGuys {
 
         let result;
 
-        fetch("https://backbone-client-api.azurewebsites.net/api/v1/userGet", {
+       await fetch("https://backbone-client-api.azurewebsites.net/api/v1/userGet", {
             "method": "POST",
             "headers": {
                 "Host": "backbone-client-api.azurewebsites.net",
                 "User-Agent": "UnityPlayer/2020.3.38f1 (UnityWebRequest/1.0, libcurl/7.80.0-DEV)",
                 "Accept": "*/*",
                 "BACKBONE_APP_ID": "8561191D-03B7-423E-B779-D2F6E77A3A45",
-                "ACCESS_TOKEN": "682256917627678300-5THBP4fdvFivP0t64C6kZbKTX+hw2Zsl:7iUH+dXLiDLR/KAbc+8NpSpuJKV2vlAgEH63biFPQcyFKBTtewEHz7wrfnrfPVU1UyQ08JGfZE9ciBzra8TnIw==",
+                "ACCESS_TOKEN": accessToken,
                 "X-Unity-Version": "2020.3.38f1",
                 "Content-Type": "application/x-www-form-urlencoded",
                 "Accept-Encoding": "gzip, deflate, br",
                 "Connection": "keep-alive"
             },
-            "body": "lastUpdate=1900-01-01T00%3a00%3a00&lastSync=1900-01-01T00%3a00%3a00&generateQuests=0&getQuests=0&getTiles=0&getLayouts=0&accessToken=682256917627678300-5THBP4fdvFivP0t64C6kZbKTX%2Bhw2Zsl%3A7iUH%2BdXLiDLR%2FKAbc%2B8NpSpuJKV2vlAgEH63biFPQcyFKBTtewEHz7wrfnrfPVU1UyQ08JGfZE9ciBzra8TnIw%3D%3D",
-            "compress": true
+            "body": `lastUpdate=1900-01-01T00%3a00%3a00&lastSync=1900-01-01T00%3a00%3a00&generateQuests=0&getQuests=0&getTiles=0&getLayouts=0&accessToken=${encodeURIComponent(accessToken)}`
         })
             .then(r => r.json())
             .then(data => {
@@ -100,7 +99,7 @@ module.exports = class StumbleGuys {
 
         let returnMessage;
 
-        fetch("https://backbone-client-api.azurewebsites.net/api/v1/userChangeNick", {
+        await fetch("https://backbone-client-api.azurewebsites.net/api/v1/userChangeNick", {
             method: "POST",
             headers: {
                 "Host": "backbone-client-api.azurewebsites.net",
@@ -116,7 +115,7 @@ module.exports = class StumbleGuys {
             .then(r => r.json())
             .then(data => {
                 if (data.nickName == nickname) {
-                    // nickname alterado com sucesso!
+                    // ✅
                     returnMessage = 200;
                 };
             })
